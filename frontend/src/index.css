@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #f7f8fb;
+  color: #111827;
+  font-feature-settings: "cv05" 1;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
