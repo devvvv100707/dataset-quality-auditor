@@ -1,3 +1,4 @@
+import { PageIntro } from "../components/Header";
 import MetricCard from "../components/MetricCard";
 import { useAudit } from "../context/AuditContext";
 
@@ -59,7 +60,8 @@ function fmt(value) {
 export default function ResultsEvaluation() {
   const { evaluation, experiment, model } = useAudit();
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-6xl space-y-6">
+      <PageIntro title="Results & Evaluation" subtitle="Supervised scores appear only when the controlled experiment file supplies ground truth." />
       <section className="rounded-xl border border-line bg-white p-4">
         <h3 className="text-sm font-semibold">This dataset</h3>
         {!evaluation && <p className="mt-2 text-sm text-muted">Run an audit to record reconstruction statistics.</p>}

@@ -16,13 +16,14 @@ def reset_sessions() -> None:
     SESSIONS.clear()
 
 
-def _store(name: str, frame: pd.DataFrame) -> dict[str, Any]:
+def _store(name: str, frame: pd.DataFrame, byte_size: int) -> dict[str, Any]:
     dataset_id = str(uuid.uuid4())
     record = {
         "id": dataset_id,
         "name": name,
         "rows": int(len(frame)),
         "columns": int(frame.shape[1]),
+        "byte_size": int(byte_size),
         "column_names": [str(c) for c in frame.columns],
         "frame": frame.copy(deep=True),
         "audit": None,
@@ -33,13 +34,14 @@ def _store(name: str, frame: pd.DataFrame) -> dict[str, Any]:
 
 
 def load_demo() -> dict[str, Any]:
-    frame = load_csv_path(demo_csv_path())
-    return _store("demo_dataset.csv", frame)
+    path = demo_csv_path()
+    frame = load_csv_path(path)
+    return _store("demo_dataset.csv", frame, path.stat().st_size)
 
 
 def load_upload(filename: str, payload: bytes) -> dict[str, Any]:
     frame = load_csv_bytes(payload, source_name=filename or "upload.csv")
-    return _store(filename or "upload.csv", frame)
+    return _store(filename or "upload.csv", frame, len(payload))
 
 
 def get_session(dataset_id: str) -> dict[str, Any] | None:

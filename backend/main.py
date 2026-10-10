@@ -56,6 +56,7 @@ def _summary(session: dict) -> dict:
         "name": session["name"],
         "rows": session["rows"],
         "columns": session["columns"],
+        "byte_size": session.get("byte_size"),
         "column_names": session["column_names"],
         "audited": session["audit"] is not None,
         "model_trained": bool(session["model"] and session["model"].get("status") == "trained"),

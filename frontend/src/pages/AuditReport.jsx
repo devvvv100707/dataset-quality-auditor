@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { client, reportCsvUrl } from "../api/client";
+import { PageIntro } from "../components/Header";
 import { useAudit } from "../context/AuditContext";
 
 export default function AuditReport() {
@@ -19,7 +20,8 @@ export default function AuditReport() {
   if (!dataset) return <p className="text-sm text-muted">Load a dataset before exporting a report.</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="mx-auto max-w-6xl space-y-4">
+      <PageIntro title="Audit Report" subtitle="JSON and CSV exports list findings and metadata only." />
       <p className="max-w-3xl text-sm text-muted">
         Downloads list findings and metadata. They do not contain a modified dataset.
       </p>

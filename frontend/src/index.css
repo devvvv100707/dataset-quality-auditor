@@ -4,8 +4,14 @@
 
 body {
   margin: 0;
-  background: #f9f9ff;
-  color: #141b2b;
+  background: #f7f8fb;
+  color: #111827;
+  font-feature-settings: "cv05" 1;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "cv05" 1;
 }
 
 button:disabled {

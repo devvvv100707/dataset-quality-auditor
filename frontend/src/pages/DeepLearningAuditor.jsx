@@ -1,13 +1,15 @@
 import { ErrorChart, LossChart } from "../components/Charts";
 import DataTable from "../components/DataTable";
+import { PageIntro } from "../components/Header";
 import MetricCard from "../components/MetricCard";
 import { useAudit } from "../context/AuditContext";
 
 export default function DeepLearningAuditor() {
   const { model, busy, error } = useAudit();
   return (
-    <div className="space-y-6">
-      <section className="max-w-3xl text-sm leading-6 text-muted">
+    <div className="mx-auto max-w-6xl space-y-6">
+      <PageIntro title="Deep Learning Auditor" subtitle="A fully connected autoencoder scores numerical rows. Flags need human verification." />
+      <section className="max-w-3xl rounded-xl bg-white p-6 text-sm leading-6 text-[#4b5563] shadow-sm">
         <p>
           The auditor trains a fully connected autoencoder on numerical columns only. The encoder is
           Linear then ReLU into a bottleneck. The decoder mirrors it and is trained with mean squared

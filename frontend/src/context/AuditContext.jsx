@@ -56,6 +56,21 @@ export function AuditProvider({ children }) {
     }
   }
 
+  async function changeTarget(next) {
+    setTarget(next);
+    if (!dataset || !audit) return;
+    setBusy("Updating class balance");
+    setError("");
+    try {
+      const audited = await client.audit(dataset.id, next);
+      setAudit(audited.audit);
+    } catch (err) {
+      setError(errorMessage(err));
+    } finally {
+      setBusy("");
+    }
+  }
+
   async function startAudit() {
     if (!dataset) return;
     setError("");
@@ -86,7 +101,7 @@ export function AuditProvider({ children }) {
       evaluation,
       experiment,
       target,
-      setTarget,
+      setTarget: changeTarget,
       busy,
       error,
       loadDemo,

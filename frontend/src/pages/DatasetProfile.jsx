@@ -1,5 +1,6 @@
 import { BalanceChart, MissingChart } from "../components/Charts";
 import DataTable from "../components/DataTable";
+import { PageIntro } from "../components/Header";
 import MetricCard from "../components/MetricCard";
 import { useAudit } from "../context/AuditContext";
 
@@ -12,7 +13,8 @@ export default function DatasetProfile() {
   const duplicates = audit?.duplicates;
   const balance = audit?.class_balance;
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-6xl space-y-6">
+      <PageIntro title="Dataset Profile" subtitle="Preview, dtypes, missing values, duplicates, constants, and the class target." />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard label="Numerical" value={profile.numerical_count} />
         <MetricCard label="Categorical" value={profile.categorical_count} />
