@@ -1,0 +1,334 @@
+{
+  "dataset": "demo_dataset.csv in-memory copy",
+  "source_sha256_before": "9dcc13988492b6a50a75d770328ccdb47bca749ef05636d68f41f0c8b6283c22",
+  "source_sha256_after": "9dcc13988492b6a50a75d770328ccdb47bca749ef05636d68f41f0c8b6283c22",
+  "source_unchanged": true,
+  "original_rows": 120,
+  "working_rows": 123,
+  "injections": {
+    "missing_cells": [
+      {
+        "row": 10,
+        "column": "study_hours"
+      },
+      {
+        "row": 11,
+        "column": "sleep_hours"
+      },
+      {
+        "row": 12,
+        "column": "lab_score"
+      },
+      {
+        "row": 25,
+        "column": "attendance_pct"
+      },
+      {
+        "row": 26,
+        "column": "prior_gpa"
+      },
+      {
+        "row": 40,
+        "column": "assignments_submitted"
+      },
+      {
+        "row": 41,
+        "column": "age"
+      },
+      {
+        "row": 55,
+        "column": "study_hours"
+      }
+    ],
+    "duplicate_source_rows": [
+      0,
+      1,
+      2
+    ],
+    "appended_duplicate_rows": [
+      120,
+      121,
+      122
+    ],
+    "outlier_rows": [
+      {
+        "row": 20,
+        "column": "lab_score",
+        "value": 5000.0
+      },
+      {
+        "row": 21,
+        "column": "age",
+        "value": -40.0
+      },
+      {
+        "row": 22,
+        "column": "study_hours",
+        "value": 400.0
+      },
+      {
+        "row": 23,
+        "column": "prior_gpa",
+        "value": 40.0
+      },
+      {
+        "row": 24,
+        "column": "sleep_hours",
+        "value": 30.0
+      }
+    ]
+  },
+  "natural_missing_cells_in_source": [
+    {
+      "row": 3,
+      "column": "study_hours"
+    },
+    {
+      "row": 4,
+      "column": "sleep_hours"
+    },
+    {
+      "row": 70,
+      "column": "lab_score"
+    }
+  ],
+  "statistical_audit_on_corrupted_copy": {
+    "missing_cells": 11,
+    "missing_percentage": 0.8943,
+    "duplicate_rows": 8,
+    "duplicate_percentage": 6.5041
+  },
+  "detectors": {
+    "missing_values": {
+      "definition": "Positive cells are the injected coordinates. A cell is detected when it is null. Natural missing cells count as false positives.",
+      "injected_cells": 8,
+      "true_positives": 8,
+      "false_positives": 3,
+      "false_positives_natural_missing": 3,
+      "false_positives_other": 0,
+      "false_negatives": 0,
+      "precision": 0.7272727272727273,
+      "recall": 1.0,
+      "f1": 0.8421052631578948
+    },
+    "duplicate_rows": {
+      "available": true,
+      "precision": 0.375,
+      "recall": 1.0,
+      "f1": 0.5454545454545454,
+      "false_positive_rate": 0.041666666666666664,
+      "confusion_matrix": {
+        "labels": [
+          "normal",
+          "positive"
+        ],
+        "matrix": [
+          [
+            115,
+            5
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "tn": 115,
+        "fp": 5,
+        "fn": 0,
+        "tp": 3
+      },
+      "definition": "Positive rows are the appended copies. Every row in an exact duplicate group is predicted positive, so original partner rows and any natural duplicates count as false positives.",
+      "false_positive_row_indexes": [
+        0,
+        1,
+        2,
+        8,
+        119
+      ]
+    },
+    "autoencoder_outliers": {
+      "available": true,
+      "precision": 0.625,
+      "recall": 1.0,
+      "f1": 0.7692307692307693,
+      "false_positive_rate": 0.025423728813559324,
+      "confusion_matrix": {
+        "labels": [
+          "normal",
+          "positive"
+        ],
+        "matrix": [
+          [
+            115,
+            3
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "tn": 115,
+        "fp": 3,
+        "fn": 0,
+        "tp": 5
+      },
+      "roc_auc": 1.0,
+      "average_precision": 1.0,
+      "definition": "Positive rows are the five injected numerical outliers. The autoencoder and the 95th percentile validation threshold did not see these labels.",
+      "injected_rows": [
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "flagged_injected_rows": [
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "flagged_non_injected_rows": [
+        11,
+        16,
+        94
+      ]
+    },
+    "modified_zscore_outliers": {
+      "available": true,
+      "precision": 0.7142857142857143,
+      "recall": 1.0,
+      "f1": 0.8333333333333334,
+      "false_positive_rate": 0.01694915254237288,
+      "confusion_matrix": {
+        "labels": [
+          "normal",
+          "positive"
+        ],
+        "matrix": [
+          [
+            116,
+            2
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "tn": 116,
+        "fp": 2,
+        "fn": 0,
+        "tp": 5
+      },
+      "roc_auc": 1.0,
+      "average_precision": 1.0,
+      "definition": "Modified z-score (0.6745 * (x-median)/MAD) fit on the same training split. A row is flagged when its largest absolute feature z-score exceeds 3.5. The cutoff was not tuned on the injected labels.",
+      "flagged_non_injected_rows": [
+        11,
+        16
+      ]
+    }
+  },
+  "autoencoder": {
+    "status": "trained",
+    "seed": 42,
+    "features": [
+      "age",
+      "study_hours",
+      "attendance_pct",
+      "prior_gpa",
+      "sleep_hours",
+      "assignments_submitted",
+      "lab_score",
+      "year"
+    ],
+    "architecture": {
+      "type": "fully_connected_autoencoder",
+      "input": 8,
+      "hidden": [
+        8,
+        4
+      ],
+      "bottleneck": 4,
+      "layers": [
+        "Linear(8, 8)",
+        "ReLU",
+        "Linear(8, 4)",
+        "Linear(4, 8)",
+        "ReLU",
+        "Linear(8, 8)"
+      ],
+      "loss": "MSE",
+      "optimizer": "Adam",
+      "learning_rate": 0.001,
+      "max_epochs": 40,
+      "epochs_ran": 7,
+      "early_stopping_patience": 6
+    },
+    "train_loss": 1.0029680927594502,
+    "best_val_loss": 54.66534434238061,
+    "test_reconstruction_error": {
+      "mean": 6.236375967458807,
+      "std": 27.12949772366556,
+      "min": 0.1275288595753607,
+      "max": 139.12832003919064,
+      "median": 0.6641319283980546
+    },
+    "threshold": {
+      "method": "95th percentile of validation reconstruction MSE",
+      "value": 1.7251438340344465,
+      "labels_used": false
+    },
+    "flagged_count": 8,
+    "flagged_percentage": 6.5041,
+    "training_seconds": 0.7271669089999477,
+    "split": {
+      "train": 73,
+      "validation": 25,
+      "test": 25
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 1.1828140219052632,
+        "val_loss": 54.66534434238061
+      },
+      {
+        "epoch": 2,
+        "train_loss": 1.1938543717066448,
+        "val_loss": 54.68186256464114
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.9145126144091288,
+        "val_loss": 54.68788996962592
+      },
+      {
+        "epoch": 4,
+        "train_loss": 1.1335239013036091,
+        "val_loss": 54.69761375408795
+      },
+      {
+        "epoch": 5,
+        "train_loss": 1.205708126227061,
+        "val_loss": 54.70768408732486
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.9428739746411642,
+        "val_loss": 54.71591991506576
+      },
+      {
+        "epoch": 7,
+        "train_loss": 1.0029680927594502,
+        "val_loss": 54.72647749434132
+      }
+    ]
+  },
+  "notes": [
+    "Synthetic corruption lives only in the working copy.",
+    "Injected labels were not used to train the network or set its threshold.",
+    "False positives against the synthetic labels can be natural quirks of the demo file."
+  ]
+}

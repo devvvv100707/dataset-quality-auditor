@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #f9f9ff;
+  color: #141b2b;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
