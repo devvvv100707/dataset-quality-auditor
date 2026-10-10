@@ -1,10 +1,50 @@
 # AI Dataset Quality Auditor Using Deep Learning
 
-A local college project that **audits** a small CSV. It measures missing values, exact duplicate rows, class imbalance, and numerical reconstruction error with a PyTorch autoencoder.
+A local auditor for small CSV files. It measures missing values, exact duplicate rows, class imbalance, and numerical reconstruction error with a PyTorch autoencoder, then explains the findings in a five-page dashboard.
 
-It does **not** clean the file. It never imputes the stored table, deletes duplicates, changes labels, or exports a repaired dataset. Downloads contain findings and metadata only. Flagged rows are potential anomalies for a person to check, not confirmed errors.
+**Audit only.** The app never imputes the stored table, deletes duplicates, changes labels, or exports a repaired dataset. Downloads contain findings and metadata only. A flagged row is a candidate for human review, not a confirmed error.
 
-The interface is http://localhost:5173. The API is http://localhost:8000. Interactive API docs are http://localhost:8000/docs.
+Open the interface at http://localhost:5173, the API at http://localhost:8000, and the API docs at http://localhost:8000/docs.
+
+## Screenshots
+
+These frames are from a real demo audit of `demo_dataset.csv` in the running app (120 rows, 3 missing cells, 2 duplicate rows, 19 reconstruction flags).
+
+### Overview
+
+![Dataset Overview after the demo audit](docs/images/overview.png)
+
+*Overview after Load demo dataset and Start audit.*
+
+### Dataset Profile
+
+![Dataset Profile with preview, missing chart, and class balance](docs/images/dataset-profile.png)
+
+*Profile preview, dtypes, missing-value chart, and the program class chart.*
+
+### Deep Learning Auditor
+
+![Deep Learning Auditor with loss curve, threshold, and flagged rows](docs/images/deep-learning-auditor.png)
+
+*Loss curve, error histogram, threshold 1.1975, and feature contributions.*
+
+### Results and Evaluation
+
+![Results and Evaluation with experiment metrics](docs/images/results-evaluation.png)
+
+*Held-out reconstruction stats and the controlled-experiment scores.*
+
+### Audit Report
+
+![Audit Report with findings and JSON](docs/images/audit-report.png)
+
+*Findings list and JSON export. The file is not a cleaned dataset.*
+
+### Mobile navigation
+
+![Collapsed mobile navigation open](docs/images/mobile-nav.png)
+
+*At a narrow width the sidebar collapses and the menu lists all five pages.*
 
 ## Stack
 
@@ -95,11 +135,13 @@ Optional larger files, not required: the UCI Adult (Census Income) dataset, http
 
 ## How to use the five pages
 
-1. **Overview.** Choose a CSV (UTF-8, up to 2 MB, at most 20,000 rows and 80 columns) or click **Load demo dataset**. Then click **Start audit**. Cards show row count, missing cells, duplicate rows, and autoencoder flags only after those steps have run.
-2. **Dataset Profile.** Preview, dtypes, missing chart, duplicate count, constant columns, and a class-target dropdown. Pick `program` on the demo file to see the Biology share. Changing the target remeasures class balance and does not edit the file.
-3. **Deep Learning Auditor.** Architecture, loss curve, reconstruction-error histogram, validation threshold, flagged count, and a searchable table of high-error rows with per-feature squared error.
-4. **Results & Evaluation.** For an upload, supervised precision, recall, and F1 stay unavailable because there is no anomaly ground truth. Reconstruction stats from the held-out split are shown. The lower section reads `backend/reports/experiment_results.json` and labels those scores as a controlled experiment on a copy.
-5. **Audit Report.** Load the JSON report, then download JSON or the findings CSV. Both list checks, model settings, suggestions, and limitations. They are not a cleaned copy of the CSV.
+1. **Overview.** Choose a CSV (UTF-8, up to 2 MB, at most 20,000 rows and 80 columns) or click **Load demo dataset**. Then click **Start audit**. Cards show row count, missing cells, duplicate rows, and autoencoder flags only after those steps have run. See [docs/images/overview.png](docs/images/overview.png).
+2. **Dataset Profile.** Preview, dtypes, missing chart, duplicate count, constant columns, and a class-target dropdown. Pick `program` on the demo file to see the Biology share. Changing the target remeasures class balance and does not edit the file. See [docs/images/dataset-profile.png](docs/images/dataset-profile.png).
+3. **Deep Learning Auditor.** Architecture, loss curve, reconstruction-error histogram, validation threshold, flagged count, and a searchable table of high-error rows with per-feature squared error. See [docs/images/deep-learning-auditor.png](docs/images/deep-learning-auditor.png).
+4. **Results & Evaluation.** For an upload, supervised precision, recall, and F1 stay unavailable because there is no anomaly ground truth. Reconstruction stats from the held-out split are shown. The lower section reads `backend/reports/experiment_results.json` and labels those scores as a controlled experiment on a copy. See [docs/images/results-evaluation.png](docs/images/results-evaluation.png).
+5. **Audit Report.** Load the JSON report, then download JSON or the findings CSV. Both list checks, model settings, suggestions, and limitations. They are not a cleaned copy of the CSV. See [docs/images/audit-report.png](docs/images/audit-report.png).
+
+On a phone-width window the left rail is hidden until the menu button is opened ([docs/images/mobile-nav.png](docs/images/mobile-nav.png)).
 
 ## Experiment results
 
